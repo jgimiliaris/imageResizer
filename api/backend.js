@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const multer = require('multer');
 const sharp = require('sharp');
 const fs = require('fs');
@@ -7,6 +8,9 @@ const path = require('path');
 
 const app = express();
 const upload = multer({ dest: 'uploads/' });
+
+//cors optimisation
+app.arguments(cors({ origin: '*'}));
 
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {
