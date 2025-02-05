@@ -10,7 +10,8 @@ const app = express();
 // const upload = multer({ dest: 'uploads/' });
 
 //cors optimisation
-app.arguments(cors({ origin: '*'}));
+// app.arguments(cors({ origin: '*'}));
+app.arguments(cors({ origin: '*' }));
 
 const storage = multer.memoryStorage();
 const upload = multer({
