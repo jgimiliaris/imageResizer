@@ -7,30 +7,42 @@ const path = require('path');
 
 
 const app = express();
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer({ dest: 'uploads/' });
 
 //cors optimisation
 app.arguments(cors({ origin: '*'}));
 
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+
+}).single('image');
+
 app.post('/upload', upload.single('image'), async (req, res) => {
     try {
-      const imagePath = req.file.path;
-      const outputPath = path.join('resized', `${Date.now()}_resized.png`);
-      console.log('debug1-enteredtheapp');
+      // const imagePath = req.file.path;
+      // const outputPath = path.join('resized', `${Date.now()}_resized.png`);
+      // console.log('debug1-enteredtheapp');
   
-      await sharp(imagePath)
-        .resize(442, 492)
-        .toFile(outputPath);
+      // await sharp(imagePath)
+      //   .resize(442, 492)
+      //   .toFile(outputPath);
 
-        console.log('debug2-enteredtheapp');
+      //   console.log('debug2-enteredtheapp');
   
-      fs.unlinkSync(imagePath); // Remove the original file to save space
+      // fs.unlinkSync(imagePath); // Remove the original file to save space
   
-      res.download(outputPath, (err) => {
-        if (!err) fs.unlinkSync(outputPath); // Clean up after download
+      // res.download(outputPath, (err) => {
+      //   if (!err) fs.unlinkSync(outputPath); // Clean up after download
 
-        console.log('debug3-noerror');
-      });
+      //   console.log('debug3-noerror');
+      // });
+
+      console.log('hehehehehehehehehehehehe');
+
+      const resizedImageBuffer = await sharp(req.file.buffer).resize(442, 492).toBuffer();
+      res.set('Content-Type', 'image/png');
+      res.send(resizedImageBuffer);
     } catch (error) {
 
         console.log(error);
