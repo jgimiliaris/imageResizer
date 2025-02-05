@@ -3,7 +3,7 @@
     "routes":[
         {
             "src": "/upload",
-            "dest": "/api/image-resizer.js"
+            "dest": "/api/backend.js"
         }
     ]
 }
