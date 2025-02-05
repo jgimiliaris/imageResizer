@@ -11,7 +11,7 @@ const app = express();
 
 //cors optimisation
 // app.arguments(cors({ origin: '*'}));
-app.arguments(cors({ origin: '*' }));
+// app.arguments(cors({ origin: '*' }));
 
 const storage = multer.memoryStorage();
 const upload = multer({
