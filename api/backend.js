@@ -15,42 +15,30 @@ const app = express();
 
 const storage = multer.memoryStorage();
 const upload = multer({
-  storage: storage,
+  storage: storage
 
-}).single('image');
+}).single('image'); 
 
 app.post('/upload', upload.single('image'), async (req, res) => {
-    try {
-      // const imagePath = req.file.path;
-      // const outputPath = path.join('resized', `${Date.now()}_resized.png`);
-      // console.log('debug1-enteredtheapp');
-  
-      // await sharp(imagePath)
-      //   .resize(442, 492)
-      //   .toFile(outputPath);
-
-      //   console.log('debug2-enteredtheapp');
-  
-      // fs.unlinkSync(imagePath); // Remove the original file to save space
-  
-      // res.download(outputPath, (err) => {
-      //   if (!err) fs.unlinkSync(outputPath); // Clean up after download
-
-      //   console.log('debug3-noerror');
-      // });
-
-      console.log('hehehehehehehehehehehehe');
-
-      const resizedImageBuffer = await sharp(req.file.buffer).resize(442, 492).toBuffer();
-      res.set('Content-Type', 'image/png');
-      res.send(resizedImageBuffer);
-    } catch (error) {
-
-        console.log(error);
-        res.status(500).send('Error processing image.');
-
+  try {
+    // Ensure the file is uploaded
+    if (!req.file) {
+      return res.status(400).send('No file uploaded.');
     }
-  });
+
+    // Process the image using sharp
+    const resizedImageBuffer = await sharp(req.file.buffer)
+      .resize(442, 492)
+      .toBuffer();
+
+    // Set the response type and send the resized image
+    res.set('Content-Type', 'image/png');
+    res.send(resizedImageBuffer);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error processing image.');
+  }
+});
   
 //   app.listen(3000, () => {
 //     console.log('Server is running on port 3000');
