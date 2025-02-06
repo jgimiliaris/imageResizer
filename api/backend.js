@@ -4,7 +4,7 @@ const multer = require('multer');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
-const { Busboy } = require('busboy');
+const { busboy } = require('busboy');
 
 const app = express();
 // const upload = multer({ dest: 'uploads/' });
@@ -22,10 +22,10 @@ const upload = multer({
 // const bus
 
 app.post('/upload', (req, res) => {
-  const busboy = Busboy({ headers: req.headers });
+  const bb = busboy({ headers: req.headers });
   let imageBuffer = Buffer.alloc(0);
 
-  busboy.on('file', (fieldname, file) => {
+  bb.on('file', (fieldname, file) => {
     file.on('data', (data) => {
       imageBuffer = Buffer.concat([imageBuffer, data]);
     });
@@ -45,12 +45,12 @@ app.post('/upload', (req, res) => {
     });
   });
 
-  busboy.on('error', (err) => {
+  bb.on('error', (err) => {
     console.error('Busboy error:', err);
     res.status(500).send('File upload failed.');
   });
 
-  req.pipe(busboy);
+  req.pipe(bb);
 });
 //     })
 //   })
