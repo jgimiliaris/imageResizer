@@ -36,7 +36,11 @@ app.post('/upload', (req, res) => {
           .resize(442, 492)
           .toBuffer();
 
+
+        // res.se
+        res.set('Access-Control-Allow-Origin', '*');
         res.set('Content-Type', 'image/png');
+        res.set('Content-Disposition', 'attachment; filename="resized.png"');
         res.send(resizedImageBuffer);
       } catch (error) {
         console.error('Error resizing image:', error);
