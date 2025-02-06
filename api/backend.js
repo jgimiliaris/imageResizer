@@ -4,7 +4,7 @@ const multer = require('multer');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
-const { busboy } = require('busboy');
+const busboy = require('busboy');
 
 const app = express();
 // const upload = multer({ dest: 'uploads/' });
