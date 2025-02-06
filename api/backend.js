@@ -22,7 +22,7 @@ const upload = multer({
 // const bus
 
 app.post('/upload', (req, res) => {
-  const busboy = new Busboy({ headers: req.headers });
+  const busboy = Busboy({ headers: req.headers });
   let imageBuffer = Buffer.alloc(0);
 
   busboy.on('file', (fieldname, file) => {
